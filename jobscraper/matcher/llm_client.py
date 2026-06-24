@@ -38,8 +38,9 @@ class LLMClient(ABC):
 
 
 def build_llm_client(config: LLMConfig) -> LLMClient:
-    """Factory: return the LLMClient implementation for config.provider.
+    """Factory: return the LLMClient implementation for config.provider."""
+    if config.provider == "gemini":
+        from jobscraper.matcher.gemini_client import GeminiClient
 
-    TODO: dispatch on config.provider ("gemini" | "anthropic" | "openai").
-    """
-    raise NotImplementedError
+        return GeminiClient(model=config.model)
+    raise ValueError(f"unsupported LLM provider: {config.provider!r}")
