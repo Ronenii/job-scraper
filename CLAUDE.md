@@ -1,5 +1,8 @@
 # CLAUDE.md — Contributor & Agent Guide
 
+> **Using Codex or GitHub Copilot?** See `AGENTS.md` (cross-platform equivalent).
+> Skills are symlinked at `~/.agents/skills/` for cross-runtime access.
+
 Guidance for Claude Code (and humans) working in this repo. Read `docs/spec.md`
 for the full design; this file is the day-to-day map and conventions.
 
