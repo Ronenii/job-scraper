@@ -1,0 +1,20 @@
+{
+  "jobs": [
+    {
+      "id": 123,
+      "title": "Mechanical Engineering Student",
+      "absolute_url": "https://boards.greenhouse.io/acme/jobs/123",
+      "location": {"name": "Haifa, Israel"},
+      "content": "&lt;p&gt;Part-time role for an engineering student.&lt;/p&gt;",
+      "updated_at": "2026-06-20T10:00:00-04:00"
+    },
+    {
+      "id": 456,
+      "title": "Senior Backend Engineer",
+      "absolute_url": "https://boards.greenhouse.io/acme/jobs/456",
+      "location": {"name": "Tel Aviv, Israel"},
+      "content": "&lt;p&gt;10+ years experience.&lt;/p&gt;",
+      "updated_at": "2026-06-19T10:00:00-04:00"
+    }
+  ]
+}
