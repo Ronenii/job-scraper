@@ -1,0 +1,12 @@
+# Convenience wrapper for running the bot in Docker.
+# One pass:   docker compose run --rm bot
+# Schedule it from the host (e.g. Windows Task Scheduler) to run every 2-3 hours.
+services:
+  bot:
+    build: .
+    env_file: .env                  # secrets (TELEGRAM_*, LLM_API_KEY, HUNTER_API_KEY)
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro   # your filters/sources (read-only)
+      - ./data:/app/data                    # persist the SQLite dedup DB across runs
+    # Keep the DB on the mounted volume so dedup survives container restarts.
+    # (Set the DB path to /app/data/jobscraper.db in config/implementation.)

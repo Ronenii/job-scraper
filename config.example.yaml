@@ -1,0 +1,69 @@
+# Job-Scraper configuration (non-secret settings).
+# Copy to config.yaml and edit. Secrets go in .env, NOT here.
+
+# --- Search filters --------------------------------------------------------
+filters:
+  # Title matching is SEMANTIC and BILINGUAL (Hebrew + English), not exact-string.
+  # List the roles you want in either language; a listing matches if its
+  # title/description fits, even with different wording or the other language.
+  titles:
+    - "mechanical engineering student"
+    - "engineering intern"
+    - "student position mechanical"
+    - "R&D student"
+    - "מהנדס מכונות סטודנט"      # Hebrew: mechanical engineering student
+    - "סטודנט להנדסת מכונות"     # Hebrew: student in mechanical engineering
+    - "מתמחה הנדסה"             # Hebrew: engineering intern
+  # Locations to accept (free text; Hebrew or English). "remote" allowed.
+  locations:
+    - "Haifa"
+    - "Tel Aviv"
+    - "Herzliya"
+    - "remote"
+  # Hard exclusions — drop listings whose title/description contains these.
+  exclude_keywords:
+    - "senior"
+    - "10+ years"
+
+# Borderline matches (prefilter score near this) get sent to the LLM.
+match_threshold: 0.6
+
+# --- LLM provider (provider-agnostic; key lives in .env) -------------------
+llm:
+  provider: "gemini"          # gemini | anthropic | openai
+  model: "gemini-flash"       # e.g. gemini-flash | claude-haiku | gpt-4o-mini
+
+# --- Sources ---------------------------------------------------------------
+# Tier 1 (structured ATS feeds) — preferred, stable. Provide company tokens.
+# Tier 2 (HTML scraping) — best-effort, fails gracefully.
+# Tier 3 (LinkedIn) — disabled by default; enable only if you accept the risk.
+sources:
+  - name: "greenhouse"
+    enabled: true
+    params:
+      board_tokens: []        # e.g. ["company-a", "company-b"]
+  - name: "comeet"
+    enabled: true
+    params:
+      company_ids: []
+  - name: "lever"
+    enabled: false
+    params:
+      board_tokens: []
+  - name: "ashby"
+    enabled: false
+    params:
+      board_tokens: []
+  - name: "alljobs"
+    enabled: true
+    params:
+      query: "מהנדס מכונות סטודנט"   # example Hebrew query
+  - name: "drushim"
+    enabled: false
+    params: {}
+  - name: "jobmaster"
+    enabled: false
+    params: {}
+  - name: "linkedin"
+    enabled: false            # cautious — see docs/spec.md risk note
+    params: {}

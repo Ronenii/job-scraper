@@ -1,0 +1,19 @@
+# Runtime dependencies (pin versions during implementation).
+# Phase 1 — Job Alert Bot
+httpx                 # HTTP client for ATS feeds and HTML fetches
+beautifulsoup4        # HTML parsing for Tier-2 board scraping
+lxml                  # fast parser backend for BeautifulSoup
+python-telegram-bot   # Telegram delivery
+PyYAML                # config.yaml loading
+python-dotenv         # load secrets from .env
+
+# LLM providers (install only the one you use; provider-agnostic client)
+google-generativeai   # Gemini (default, free tier)
+# anthropic           # Claude Haiku (alternative)
+# openai              # gpt-4o-mini (alternative)
+
+# Tier-2 hard sites only, if needed later:
+# playwright          # headless browser for JS-heavy / protected pages
+
+# Dev/test
+pytest
