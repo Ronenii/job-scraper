@@ -1,5 +1,6 @@
 ---
 name: reviewer
+model: sonnet
 description: Review changes in the job-scraper project for correctness, security, and convention adherence before the human-approval gate. Report-only — does not edit code.
 tools: Read, Grep, Glob, Bash
 ---

@@ -1,5 +1,6 @@
 ---
 name: docs-cleanup
+model: haiku
 description: Finalize a change in the job-scraper project — sync docs (spec/CLAUDE.md/README), remove dead code, and run linters/formatters. Use as the last step before the human-approval gate.
 tools: Read, Write, Edit, Bash
 ---

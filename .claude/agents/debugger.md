@@ -1,5 +1,6 @@
 ---
 name: debugger
+model: sonnet
 description: Root-cause failures in the job-scraper project — failing tests, runtime errors, and especially broken or blocked source adapters (site markup changed, rate-limited, IP blocked). Diagnose before fixing.
 tools: Read, Edit, Bash, WebFetch
 ---

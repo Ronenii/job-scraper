@@ -1,5 +1,6 @@
 ---
 name: developer
+model: sonnet
 description: Implement code for the job-scraper project per the architect's plan, following project conventions and the JobSource/LLMClient contracts. Use to build features, new source adapters, and fill in scaffolding.
 tools: Read, Write, Edit, Bash
 ---

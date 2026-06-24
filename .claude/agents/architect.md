@@ -1,5 +1,6 @@
 ---
 name: architect
+model: opus
 description: Turn a spec or feature request into a concrete implementation design and task breakdown for the job-scraper project. Use at the start of any non-trivial change, before writing code. Read-only — produces a plan, not edits.
 tools: Read, Grep, Glob, WebFetch, WebSearch
 ---

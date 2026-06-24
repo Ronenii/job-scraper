@@ -1,5 +1,6 @@
 ---
 name: tester
+model: sonnet
 description: Write and run tests for the job-scraper project, then report pass/fail with real output. Use after the developer implements a change. Emphasizes OFFLINE adapter tests using fixtures.
 tools: Read, Write, Edit, Bash
 ---
