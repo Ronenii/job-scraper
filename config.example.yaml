@@ -31,7 +31,7 @@ match_threshold: 0.6
 # --- LLM provider (provider-agnostic; key lives in .env) -------------------
 llm:
   provider: "gemini"          # gemini | anthropic | openai
-  model: "gemini-flash"       # e.g. gemini-flash | claude-haiku | gpt-4o-mini
+  model: "gemini-2.0-flash"   # e.g. gemini-2.0-flash | claude-haiku | gpt-4o-mini
 
 # --- Sources ---------------------------------------------------------------
 # Tier 1 (structured ATS feeds) — preferred, stable. Provide company tokens.

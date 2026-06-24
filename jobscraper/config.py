@@ -11,6 +11,9 @@ NOTE: scaffolding only — shapes are defined, loading is not implemented.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
+
+import yaml
 
 
 @dataclass(frozen=True)
@@ -51,8 +54,31 @@ class AppConfig:
 
 
 def load_config(path: str = "config.yaml") -> AppConfig:
-    """Load and validate configuration from YAML + environment.
+    """Load configuration from YAML into typed AppConfig."""
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
 
-    TODO: parse YAML, merge env secrets, validate, return AppConfig.
-    """
-    raise NotImplementedError
+    f = data.get("filters", {}) or {}
+    filters = Filters(
+        titles=list(f.get("titles", []) or []),
+        locations=list(f.get("locations", []) or []),
+        exclude_keywords=list(f.get("exclude_keywords", []) or []),
+    )
+
+    sources = [
+        SourceConfig(
+            name=s["name"],
+            enabled=bool(s.get("enabled", True)),
+            params=dict(s.get("params", {}) or {}),
+        )
+        for s in (data.get("sources", []) or [])
+    ]
+
+    ld = data.get("llm", {}) or {}
+    llm = LLMConfig(provider=ld.get("provider", "gemini"), model=ld.get("model", "gemini-2.0-flash"))
+
+    return AppConfig(
+        filters=filters,
+        sources=sources,
+        llm=llm,
+        match_threshold=float(data.get("match_threshold", 0.6)),
+    )
