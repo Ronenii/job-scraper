@@ -41,8 +41,8 @@ class JobPosting:
 
     @property
     def dedup_key(self) -> str:
-        """Stable key for the SeenStore. TODO: implement (e.g. f\"{source}:{external_id}\")."""
-        raise NotImplementedError
+        """Stable key for the SeenStore: source + external id."""
+        return f"{self.source}:{self.external_id}"
 
 
 @dataclass(frozen=True)
