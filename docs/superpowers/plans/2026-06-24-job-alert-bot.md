@@ -74,7 +74,7 @@ main() -> None
 - Create: `pyproject.toml`
 - Test: `tests/test_placeholder.py` (already exists)
 
-- [ ] **Step 1: Create `pyproject.toml`**
+- [x] **Step 1: Create `pyproject.toml`**
 
 ```toml
 [project]
@@ -88,17 +88,17 @@ testpaths = ["tests"]
 addopts = "-q"
 ```
 
-- [ ] **Step 2: Install dependencies**
+- [x] **Step 2: Install dependencies**
 
 Run: `py -m venv .venv && .venv\Scripts\Activate.ps1 && pip install -r requirements.txt`
 Expected: installs httpx, beautifulsoup4, lxml, python-telegram-bot, PyYAML, python-dotenv, google-generativeai, pytest.
 
-- [ ] **Step 3: Run the existing placeholder test**
+- [x] **Step 3: Run the existing placeholder test**
 
 Run: `pytest tests/test_placeholder.py -v`
 Expected: PASS (`test_package_imports`).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add pyproject.toml
@@ -110,7 +110,7 @@ git commit -m "chore: add pyproject with pytest config"
 **Files:**
 - Create: `tests/fakes.py`
 
-- [ ] **Step 1: Write the fakes** (used by later matcher/run tests)
+- [x] **Step 1: Write the fakes** (used by later matcher/run tests)
 
 ```python
 """Test doubles — no network, deterministic."""
@@ -158,12 +158,12 @@ def make_posting(**kw) -> JobPosting:
     return JobPosting(**base)
 ```
 
-- [ ] **Step 2: Verify it imports**
+- [x] **Step 2: Verify it imports**
 
 Run: `python -c "import tests.fakes"`
 Expected: no error.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add tests/fakes.py
@@ -182,7 +182,7 @@ git commit -m "test: add shared fakes (FakeLLMClient, FakeSource, make_posting)"
 - Modify: `jobscraper/models.py` (the `dedup_key` property)
 - Test: `tests/test_models.py`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```python
 from jobscraper.models import JobPosting
@@ -194,12 +194,12 @@ def test_dedup_key_combines_source_and_id():
     assert p.dedup_key == "greenhouse:42"
 ```
 
-- [ ] **Step 2: Run it — verify it fails**
+- [x] **Step 2: Run it — verify it fails**
 
 Run: `pytest tests/test_models.py -v`
 Expected: FAIL (`NotImplementedError`).
 
-- [ ] **Step 3: Implement** — replace the body of `dedup_key` in `jobscraper/models.py`:
+- [x] **Step 3: Implement** — replace the body of `dedup_key` in `jobscraper/models.py`:
 
 ```python
     @property
@@ -208,12 +208,12 @@ Expected: FAIL (`NotImplementedError`).
         return f"{self.source}:{self.external_id}"
 ```
 
-- [ ] **Step 4: Run it — verify it passes**
+- [x] **Step 4: Run it — verify it passes**
 
 Run: `pytest tests/test_models.py -v`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add jobscraper/models.py tests/test_models.py
@@ -229,7 +229,7 @@ git commit -m "feat: implement JobPosting.dedup_key"
 **Interfaces:**
 - Produces: `load_config(path) -> AppConfig` consumed by `run_once` (Task 6.1) and `build_sources` (Task 3.3).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```python
 from jobscraper.config import load_config
@@ -268,12 +268,12 @@ sources:
     assert c.sources[1].enabled is False
 ```
 
-- [ ] **Step 2: Run it — verify it fails**
+- [x] **Step 2: Run it — verify it fails**
 
 Run: `pytest tests/test_config.py -v`
 Expected: FAIL (`NotImplementedError`).
 
-- [ ] **Step 3: Implement** — replace `load_config` in `jobscraper/config.py` and add the imports at the top:
+- [x] **Step 3: Implement** — replace `load_config` in `jobscraper/config.py` and add the imports at the top:
 
 ```python
 from pathlib import Path
@@ -311,14 +311,14 @@ def load_config(path: str = "config.yaml") -> AppConfig:
     )
 ```
 
-- [ ] **Step 4: Run it — verify it passes**
+- [x] **Step 4: Run it — verify it passes**
 
 Run: `pytest tests/test_config.py -v`
 Expected: PASS.
 
-- [ ] **Step 5: Update the example default model** — in `config.example.yaml`, set `model: "gemini-2.0-flash"` (a real Gemini id) so the default works out of the box.
+- [x] **Step 5: Update the example default model** — in `config.example.yaml`, set `model: "gemini-2.0-flash"` (a real Gemini id) so the default works out of the box.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add jobscraper/config.py tests/test_config.py config.example.yaml
@@ -341,7 +341,7 @@ git commit -m "feat: implement load_config (YAML -> AppConfig)"
 - Consumes: `JobPosting.dedup_key` (Task 1.1).
 - Produces: `SeenStore(db_path).is_new(posting)`, `.record(posting)`, `.close()` — used by `run_once` (Task 6.1).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```python
 from jobscraper.store.seen_store import SeenStore
@@ -366,12 +366,12 @@ def test_record_is_idempotent(tmp_path):
     store.close()
 ```
 
-- [ ] **Step 2: Run it — verify it fails**
+- [x] **Step 2: Run it — verify it fails**
 
 Run: `pytest tests/test_seen_store.py -v`
 Expected: FAIL (`NotImplementedError`).
 
-- [ ] **Step 3: Implement** — replace the body of `jobscraper/store/seen_store.py` (keep the module docstring):
+- [x] **Step 3: Implement** — replace the body of `jobscraper/store/seen_store.py` (keep the module docstring):
 
 ```python
 from __future__ import annotations
@@ -406,12 +406,12 @@ class SeenStore:
         self._conn.close()
 ```
 
-- [ ] **Step 4: Run it — verify it passes**
+- [x] **Step 4: Run it — verify it passes**
 
 Run: `pytest tests/test_seen_store.py -v`
 Expected: PASS (both tests).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add jobscraper/store/seen_store.py tests/test_seen_store.py
@@ -429,7 +429,7 @@ git commit -m "feat: implement SQLite-backed SeenStore for dedup"
 **Files:**
 - Create: `tests/fixtures/greenhouse_board.json`
 
-- [ ] **Step 1: Create the fixture** (trimmed shape of the real `boards-api.greenhouse.io` response)
+- [x] **Step 1: Create the fixture** (trimmed shape of the real `boards-api.greenhouse.io` response)
 
 ```json
 {
@@ -454,7 +454,7 @@ git commit -m "feat: implement SQLite-backed SeenStore for dedup"
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add tests/fixtures/greenhouse_board.json
@@ -470,7 +470,7 @@ git commit -m "test: add Greenhouse board fixture"
 **Interfaces:**
 - Produces: `GreenhouseSource(params).fetch() -> list[JobPosting]`; pure `GreenhouseSource.parse_board(data: dict, token: str) -> list[JobPosting]`. Registered in Task 3.3.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```python
 import json
@@ -510,12 +510,12 @@ def test_fetch_aggregates_tokens_and_skips_failures(monkeypatch):
     assert len(postings) == 2
 ```
 
-- [ ] **Step 2: Run them — verify they fail**
+- [x] **Step 2: Run them — verify they fail**
 
 Run: `pytest tests/test_greenhouse.py -v`
 Expected: FAIL (`NotImplementedError`).
 
-- [ ] **Step 3: Implement** — replace the body of `jobscraper/sources/greenhouse.py` (keep the module docstring):
+- [x] **Step 3: Implement** — replace the body of `jobscraper/sources/greenhouse.py` (keep the module docstring):
 
 ```python
 from __future__ import annotations
@@ -571,12 +571,12 @@ class GreenhouseSource(JobSource):
         return out
 ```
 
-- [ ] **Step 4: Run them — verify they pass**
+- [x] **Step 4: Run them — verify they pass**
 
 Run: `pytest tests/test_greenhouse.py -v`
 Expected: PASS (both tests).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add jobscraper/sources/greenhouse.py tests/test_greenhouse.py
@@ -593,7 +593,7 @@ git commit -m "feat: implement GreenhouseSource adapter (Tier 1)"
 - Consumes: `AppConfig.sources` (Task 1.2), `GreenhouseSource` (Task 3.2).
 - Produces: `build_sources(config) -> list[JobSource]`; `SOURCE_REGISTRY` dict (extended in Milestone 8).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```python
 from jobscraper.config import AppConfig, Filters, LLMConfig, SourceConfig
@@ -618,12 +618,12 @@ def test_build_sources_instantiates_enabled_known_sources():
     assert sources[0].params["board_tokens"] == ["acme"]
 ```
 
-- [ ] **Step 2: Run it — verify it fails**
+- [x] **Step 2: Run it — verify it fails**
 
 Run: `pytest tests/test_registry.py -v`
 Expected: FAIL (`ModuleNotFoundError: jobscraper.sources.registry`).
 
-- [ ] **Step 3: Implement** `jobscraper/sources/registry.py`
+- [x] **Step 3: Implement** `jobscraper/sources/registry.py`
 
 ```python
 """Maps source names from config to adapter classes.
@@ -658,12 +658,12 @@ def build_sources(config: AppConfig) -> list[JobSource]:
     return sources
 ```
 
-- [ ] **Step 4: Run it — verify it passes**
+- [x] **Step 4: Run it — verify it passes**
 
 Run: `pytest tests/test_registry.py -v`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add jobscraper/sources/registry.py tests/test_registry.py
@@ -686,7 +686,7 @@ git commit -m "feat: add source registry + build_sources"
 - Consumes: `Filters` (Task 1.2), `LLMClient.judge_match` (stub interface; fake in tests), `MatchResult` / `JobPosting` (Task 1.1).
 - Produces: `Matcher(filters, llm, threshold).evaluate(posting) -> MatchResult` — used by `run_once` (Task 6.1).
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```python
 from jobscraper.config import Filters
@@ -742,12 +742,12 @@ def test_llm_verdict_is_cached_per_title():
     assert llm.calls == 1               # second evaluation hit the cache
 ```
 
-- [ ] **Step 2: Run them — verify they fail**
+- [x] **Step 2: Run them — verify they fail**
 
 Run: `pytest tests/test_matcher.py -v`
 Expected: FAIL (`NotImplementedError`).
 
-- [ ] **Step 3: Implement** — replace the `evaluate` body in `jobscraper/matcher/matcher.py` and add a module-level helper + cache init. Full class body:
+- [x] **Step 3: Implement** — replace the `evaluate` body in `jobscraper/matcher/matcher.py` and add a module-level helper + cache init. Full class body:
 
 ```python
 from __future__ import annotations
@@ -791,12 +791,12 @@ class Matcher:
         return MatchResult(posting, score >= self.threshold, score, reason, "llm")
 ```
 
-- [ ] **Step 4: Run them — verify they pass**
+- [x] **Step 4: Run them — verify they pass**
 
 Run: `pytest tests/test_matcher.py -v`
 Expected: PASS (all five).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add jobscraper/matcher/matcher.py tests/test_matcher.py
@@ -814,7 +814,7 @@ git commit -m "feat: implement two-stage Matcher (prefilter + cached LLM deferra
 - Consumes: `Filters`, `JobPosting`, `LLMConfig`.
 - Produces: `GeminiClient(LLMClient)`; pure `build_match_prompt(posting, filters) -> str`, `parse_match_response(text) -> tuple[bool, float, str]`; `build_llm_client(config)` returns a `GeminiClient` for `provider == "gemini"`.
 
-- [ ] **Step 1: Write the failing tests** (pure helpers only — no API)
+- [x] **Step 1: Write the failing tests** (pure helpers only — no API)
 
 ```python
 from jobscraper.config import Filters, LLMConfig
@@ -851,12 +851,12 @@ def test_build_llm_client_rejects_unknown_provider():
         build_llm_client(LLMConfig(provider="nope", model="x"))
 ```
 
-- [ ] **Step 2: Run them — verify they fail**
+- [x] **Step 2: Run them — verify they fail**
 
 Run: `pytest tests/test_gemini_client.py -v`
 Expected: FAIL (`ModuleNotFoundError`).
 
-- [ ] **Step 3: Implement** `jobscraper/matcher/gemini_client.py`
+- [x] **Step 3: Implement** `jobscraper/matcher/gemini_client.py`
 
 ```python
 """Gemini implementation of LLMClient. Pure prompt/parse helpers are unit-tested;
@@ -919,7 +919,7 @@ class GeminiClient(LLMClient):
         return resp.text.strip()
 ```
 
-- [ ] **Step 4: Implement** `build_llm_client` — replace its body in `jobscraper/matcher/llm_client.py`:
+- [x] **Step 4: Implement** `build_llm_client` — replace its body in `jobscraper/matcher/llm_client.py`:
 
 ```python
 def build_llm_client(config: LLMConfig) -> LLMClient:
@@ -930,12 +930,12 @@ def build_llm_client(config: LLMConfig) -> LLMClient:
     raise ValueError(f"unsupported LLM provider: {config.provider!r}")
 ```
 
-- [ ] **Step 5: Run the tests — verify they pass**
+- [x] **Step 5: Run the tests — verify they pass**
 
 Run: `pytest tests/test_gemini_client.py -v`
 Expected: PASS (all four). (Note: these import `gemini_client` but only call the pure helpers and the error path, so `google.generativeai` is not invoked.)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add jobscraper/matcher/gemini_client.py jobscraper/matcher/llm_client.py tests/test_gemini_client.py
@@ -958,7 +958,7 @@ git commit -m "feat: add Gemini LLM client + build_llm_client factory"
 - Consumes: `MatchResult` (Task 1.1).
 - Produces: `format_message(result) -> str`; `TelegramNotifier(token, chat_id).send(result)`, `.send_batch(results)` — used by `run_once` (Task 6.1).
 
-- [ ] **Step 1: Write the failing tests** (pure formatter + injected sender)
+- [x] **Step 1: Write the failing tests** (pure formatter + injected sender)
 
 ```python
 from jobscraper.models import MatchResult
@@ -999,12 +999,12 @@ class _Resp:
         return None
 ```
 
-- [ ] **Step 2: Run them — verify they fail**
+- [x] **Step 2: Run them — verify they fail**
 
 Run: `pytest tests/test_telegram.py -v`
 Expected: FAIL (`NotImplementedError`).
 
-- [ ] **Step 3: Implement** — replace the body of `jobscraper/notifier/telegram.py` (keep the module docstring):
+- [x] **Step 3: Implement** — replace the body of `jobscraper/notifier/telegram.py` (keep the module docstring):
 
 ```python
 from __future__ import annotations
@@ -1047,12 +1047,12 @@ class TelegramNotifier:
             self.send(r)
 ```
 
-- [ ] **Step 4: Run them — verify they pass**
+- [x] **Step 4: Run them — verify they pass**
 
 Run: `pytest tests/test_telegram.py -v`
 Expected: PASS (both).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add jobscraper/notifier/telegram.py tests/test_telegram.py
@@ -1075,7 +1075,7 @@ git commit -m "feat: implement Telegram notifier + message formatter"
 - Consumes: `load_config` (1.2), `build_sources` (3.3), `build_llm_client` (4.2), `Matcher` (4.1), `SeenStore` (2.1), `TelegramNotifier` (5.1).
 - Produces: `run_once(config_path, dry_run, db_path) -> list[MatchResult]`; `main()`.
 
-- [ ] **Step 1: Write the failing test** (monkeypatch the heavy pieces; dry-run avoids Telegram)
+- [x] **Step 1: Write the failing test** (monkeypatch the heavy pieces; dry-run avoids Telegram)
 
 ```python
 from jobscraper.config import AppConfig, Filters, LLMConfig
@@ -1125,12 +1125,12 @@ def test_run_once_dry_run_does_not_record(tmp_path, monkeypatch):
     assert len(run.run_once(config_path="x", dry_run=True, db_path=db)) == 1
 ```
 
-- [ ] **Step 2: Run it — verify it fails**
+- [x] **Step 2: Run it — verify it fails**
 
 Run: `pytest tests/test_run.py -v`
 Expected: FAIL (`NotImplementedError`).
 
-- [ ] **Step 3: Implement** — replace the body of `jobscraper/run.py` (keep the module docstring):
+- [x] **Step 3: Implement** — replace the body of `jobscraper/run.py` (keep the module docstring):
 
 ```python
 from __future__ import annotations
@@ -1211,17 +1211,17 @@ if __name__ == "__main__":
     main()
 ```
 
-- [ ] **Step 4: Run it — verify it passes**
+- [x] **Step 4: Run it — verify it passes**
 
 Run: `pytest tests/test_run.py -v`
 Expected: PASS (both).
 
-- [ ] **Step 5: Run the whole suite**
+- [x] **Step 5: Run the whole suite**
 
 Run: `pytest`
 Expected: all green.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add jobscraper/run.py tests/test_run.py
@@ -1275,31 +1275,113 @@ git commit -m "chore: phase-1 live smoke test complete" --allow-empty
 
 ---
 
-## Milestone 8 — Expand coverage (more adapters)
+## Milestone 8 — Self-Discovering ATS Scout + Israeli Aggregators
 
-*Goal: add the remaining Tier-1 and Tier-2 sources, one adapter per task, each following the Greenhouse pattern and the "How to add a source adapter" steps in `CLAUDE.md`. Each is independently shippable.*
+> **Supersedes the original M8 "Expand coverage" sketch.** Approved 2026-06-24.
+> Full design: `~/.claude/plans/ticklish-leaping-babbage.md`.
 
-For **each** of `comeet`, `lever`, `ashby` (Tier 1) and `alljobs` (Tier 2 — already stubbed), repeat this task shape:
+*Goal: the bot reaches the employers a candidate actually wants — international
+high-tech and funded Israeli startups — **without a hand-maintained company list**.
+Those companies post on their careers pages, which are almost always a skin over a
+known ATS (Greenhouse/Ashby/Workday/Lever/…) that exposes a **public, no-auth JSON
+API** including location + description. The bot **discovers** those companies itself
+(Common Crawl CDX + GitHub seed lists → probe → keep Israel jobs → self-populating
+registry), then fetches via the ATS APIs. Israeli HTML boards (AllJobs/Indeed/
+Drushim/JobMaster) add Hebrew-first SMB coverage the ATS path misses.*
 
-### Task 8.x: Implement `<Source>Source`
+**Architecture — two cadences, one shared registry + dedup store:**
+```
+DISCOVERY (heavy; weekly, separate CLI: python -m jobscraper.discovery.discover)
+  Common Crawl CDX + GitHub seeds -> candidate (ats_type, token) pairs
+    -> probe public ATS API -> keep tokens with Israel jobs
+    -> upsert into CompanyStore (SQLite registry)            [self-populating]
 
-**Files:**
-- Create/Modify: `jobscraper/sources/<source>.py`
-- Modify: `jobscraper/sources/registry.py` (add to `SOURCE_REGISTRY`)
-- Create: `tests/fixtures/<source>_sample.{json,html}`
-- Test: `tests/test_<source>.py`
+JOB RUN (light; hourly: python -m jobscraper.run)
+  active tokens from CompanyStore -> ATS adapters (greenhouse, ashby, workday)
+  + HTML aggregators (alljobs, indeed, drushim, jobmaster)
+    -> normalize -> dedup (SeenStore) -> match (prefilter + LLM)
+    -> notify (Telegram) -> persist
+```
+Discovery is **never** run inside the job run (probing thousands of tokens is expensive).
 
-- [ ] **Step 1:** Capture one real response (`curl`/browser) and save it as the fixture.
-- [ ] **Step 2:** Write a failing `parse_*` test asserting the normalized `JobPosting` fields (mirror `test_greenhouse.py::test_parse_board_normalizes_jobs`).
-- [ ] **Step 3:** Implement the adapter:
-  - Tier 1 (Comeet/Lever/Ashby): GET the JSON endpoint(s) from `self.params`, normalize in a pure `parse_*` method. Endpoints — Lever: `https://api.lever.co/v0/postings/{token}?mode=json`; Ashby: `https://api.ashbyhq.com/posting-api/job-board/{token}`; Comeet: per-company JSON feed (`params={"company_uid": ..., "token": ...}`).
-  - Tier 2 (AllJobs): fetch HTML with httpx, parse listing cards with BeautifulSoup; handle missing fields defensively; `fetch()` must catch and log so a markup change degrades gracefully.
-- [ ] **Step 4:** Add a `fetch()` test that stubs the HTTP method (mirror `test_greenhouse.py::test_fetch_aggregates_tokens_and_skips_failures`).
-- [ ] **Step 5:** Register the class in `SOURCE_REGISTRY` and enable it in `config.example.yaml`.
-- [ ] **Step 6:** Run `pytest tests/test_<source>.py -v` (PASS), then commit:
-  `git commit -m "feat: add <Source>Source adapter"`.
+**Decisions (locked):** Discovery = **free** (Common Crawl + seeds, no API keys);
+ATS adapters this iteration = **greenhouse (exists) + ashby + workday**; HTML aggregators
+= **all four**; Lever = recommended follow-up (8L). Out of reach (documented, not built):
+Google/Meta/Amazon/Apple Israel (proprietary in-house ATS).
 
-> LinkedIn (Tier 3) stays disabled. Only build it if explicitly opted in, heavily throttled, from the residential PC — see the spec risk note.
+**Global conventions for every task below:** mirror `GreenhouseSource` — defensive
+`fetch()` with per-unit `try/except` logging a warning, plus a pure static `parse_*`
+method tested offline against a real fixture; normalize to `JobPosting`; secrets from
+`.env`; offline tests only; realistic UA + polite delays; honor robots.txt where
+reasonable. **Bilingual Israel regex** (prober + aggregators):
+`Israel|Tel Aviv|Haifa|Herzliya|Jerusalem|…|ישראל|תל אביב|חיפה|הרצליה|ירושלים|…`.
+
+### Task 8A: Shared Tier-2 HTTP helper
+**Files:** Create `jobscraper/sources/_http.py`; Test `tests/sources/test_http.py`.
+- [ ] `get_html(url, *, params=None, delay=1.5, timeout=20.0) -> str` (realistic UA, polite `time.sleep`, `raise_for_status`).
+- [ ] Test with httpx stubbed (asserts UA header, returns text). Commit: `feat: add shared Tier-2 HTML fetch helper`.
+
+### Task 8B: Company registry store
+**Files:** Create `jobscraper/store/company_store.py`; Test `tests/test_company_store.py`.
+- [ ] `CompanyStore(db_path)` over SQLite: table `companies(ats_type, token, name, careers_url, location_sample, has_israel_jobs, first_seen, last_checked, active)`, PK `(ats_type, token)`.
+- [ ] Methods: `upsert(record)`, `active_tokens(ats_type) -> list[str]`, `all_active() -> list[CompanyRecord]`, `mark_checked(...)`, `close()`.
+- [ ] Offline test (temp DB): upsert idempotency, `active_tokens` filtering. Commit: `feat: add CompanyStore registry (SQLite)`.
+
+### Task 8C: Discovery subsystem (free: Common Crawl + seeds)
+**Files:** Create `jobscraper/discovery/{__init__,common_crawl,seeds,prober,discover}.py`, `data/seeds/{greenhouse,ashby,workday}.txt`; Tests under `tests/discovery/`.
+- [ ] **8C.1 Common Crawl CDX client** — `common_crawl.enumerate_tokens(ats_type, *, limit)` queries `https://index.commoncrawl.org/CC-MAIN-<latest>-index?url=<pattern>&output=json`; extract tokens per rule (greenhouse: seg after `boards.greenhouse.io/`; ashby: seg after `jobs.ashbyhq.com/`; workday: parse `{tenant}.{wdN}.myworkdayjobs.com/...` → tenant+wd+site). Offline test against a saved CDX JSONL fixture.
+- [ ] **8C.2 Seed loader** — `seeds.load(ats_type)` reads bundled `data/seeds/<ats>.txt` (+ optional pinned GitHub dataset with graceful fallback). Ship curated Israeli seeds (snyk, jfrog, lightricks, gongio, riskified, taboola, deel, …). Test: bundled loads; missing → empty, no raise.
+- [ ] **8C.3 Prober + Israel filter** — `prober.probe(ats_type, token) -> CompanyRecord|None`: instantiate the ATS adapter for one token, `fetch()`, keep if any location matches the Israel regex; capture `location_sample`. Errors → `None`. Test with stubbed adapter.
+- [ ] **8C.4 Orchestrator + CLI** — `discover.run_discovery(db_path, *, ats_types, limit, delay)`: union seeds + CDX candidates, probe (throttled), upsert keepers, `mark_checked` rest; `main()` argparse (`--db`, `--ats`, `--limit`); log summary. Test orchestrator with stubbed enumerate/probe. Commit per sub-task (8C.1–8C.4).
+
+### Task 8D: Wire ATS adapters to the registry
+**Files:** Modify `jobscraper/sources/greenhouse.py`, `registry.py`, `run.py`; update `tests/test_registry.py`, `tests/test_run.py`.
+- [ ] `GreenhouseSource` reads `params["board_tokens"]` (manual override) **merged with** registry tokens injected by `build_sources`.
+- [ ] `build_sources(config, company_store=None)` merges config tokens with `company_store.active_tokens(ats_type)` for each ATS source; aggregators unchanged. `run_once` opens `CompanyStore` and passes it in.
+- [ ] Update tests for the registry-injection path (fake store). Commit: `feat: drive ATS adapters from the company registry`.
+
+### Task 8E: Workday adapter (enterprise giants)
+**Files:** Create `jobscraper/sources/workday.py`, `tests/fixtures/workday_jobs.json`, `tests/test_workday.py`; register in `SOURCE_REGISTRY`.
+- [ ] `WorkdaySource` (Tier 1): `https://{tenant}.{wdN}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs` (POST JSON, `appliedFacets` location). Pure `parse_jobs(json)`.
+- [ ] Fixture + offline parse + `fetch()` (stubbed) tests; add CDX pattern + seeds. **Risk:** tenant/URL shape is fiddly — keep parsing defensive; route breakage to the `debugger` agent. Commit per task.
+
+### Task 8E2: Ashby adapter (funded startups — clean JSON)
+**Files:** Create `jobscraper/sources/ashby.py`, `tests/fixtures/ashby_board.json`, `tests/test_ashby.py`; register.
+- [ ] `AshbySource` (Tier 1): `https://api.ashbyhq.com/posting-api/job-board/{token}` (no auth; location + description). Token = `jobs.ashbyhq.com/{token}` slug. Pure `parse_board(json, token)`.
+- [ ] Fixture + offline parse + `fetch()` tests; add CDX pattern (`jobs.ashbyhq.com/*`) + seeds (e.g. `deel`). Reaches Deel + newer startups. Commit per task.
+
+### Task 8F: AllJobs adapter (Hebrew SMB coverage)
+**Files:** Rewrite `jobscraper/sources/alljobs.py`; Create `tests/fixtures/alljobs_search.html`, `tests/sources/test_alljobs.py`; register.
+- [ ] Capture fixture from `SearchResultsGuest.aspx?freetxt=mechanical&page=1`; read REAL selectors (don't guess class names).
+- [ ] Pure `parse_search_html`; `external_id` = `JobID` from `UploadSingle.aspx?JobID=` href; `url` absolute. `fetch()` from `params` (`queries`, `region`, `max_pages`), dedupe within run. Offline tests (incl. missing-field card). Commit per task.
+
+### Task 8G: Indeed IL adapter (throttled)
+**Files:** Create `jobscraper/sources/indeed.py`, `tests/fixtures/indeed_search.html`, `tests/sources/test_indeed.py`; register.
+- [ ] URL `il.indeed.com/jobs?q=<kw>&l=Israel&start=<n>`. **Heavy throttle (~3s), back off on 403/429** (robots gray-area, user-accepted personal use). Fixture + parse + fetch tests. Commit per task.
+
+### Task 8H: Drushim adapter (best-effort, first-page only)
+**Files:** Create `jobscraper/sources/drushim.py`, `tests/fixtures/drushim_search.html`, `tests/sources/test_drushim.py`; register.
+- [ ] URL `drushim.co.il/jobs/search/<kw>/`. Parse only the server-rendered first batch; **do NOT** hit robots-disallowed `/api/jobs/search`; no pagination. reCAPTCHA block → log+skip. Note Playwright path as deferred. Fixture + tests. Commit per task.
+
+### Task 8I: JobMaster adapter (page-1 snippets only)
+**Files:** Create `jobscraper/sources/jobmaster.py`, `tests/fixtures/jobmaster_search.html`, `tests/sources/test_jobmaster.py`; register.
+- [ ] URL `jobmaster.co.il/jobs/?q=<kw>` — page 1 only; respect robots (no `currPage`, no `checknum.asp` detail). Fixture + tests. Commit per task.
+
+### Task 8J: Docs & config sync
+- [ ] `config.example.yaml`/`config.yaml`: aggregators with `queries`; ATS sources note registry-driven tokens (+ optional manual `board_tokens`); add a `discovery:` section. Document the weekly `discovery.discover` vs hourly `run` cadence in `CLAUDE.md`/`docs/spec.md`. Run `pytest`; commit `docs: sync source list and discovery cadence`.
+
+### Task 8L: RECOMMENDED follow-up — Lever adapter (low effort, high yield)
+*Discovery already surfaces Lever tokens; without the adapter they're dead weight.*
+- [ ] `LeverSource`: `https://api.lever.co/v0/postings/{token}?mode=json` (has location). Add CDX pattern (`jobs.lever.co/*`) + seeds (e.g. `mobileye`); register; fixture + offline tests. Reaches Mobileye + many scale-ups. Commit per task.
+
+> LinkedIn (Tier 3) stays disabled (proprietary giants + ban-risk are future, discovery-only work — see roadmap below and the spec risk note).
+
+**Future roadmap (documented, not built):** (1) Serper.dev fresh-token refresh; (2) more
+ATS — SmartRecruiters/Workable/Comeet/Recruitee/Teamtailor/Personio; (3) proprietary
+giants via bespoke scrapers or LinkedIn discovery-only; (4) preferences/prioritization
+(company type, sector, follow/boost specific companies) in `Filters` + matcher;
+(5) more Israeli aggregators (Nisha, Gotfriends), Glassdoor via paid service;
+(6) Drushim full coverage via Playwright.
 
 ---
 
